@@ -34,6 +34,18 @@ class portabilidade extends CI_Controller
        */
       
       echo $this->directcall->portabilidade_consultar('(código pais) + (código área) + (número telefone)') );
+
+    /**
+     * Exemplo output:
+     * 
+     * object(stdClass)#26 (5) { 
+       * ["OPERADORA_ORIGEM"]=> string(5) "Claro" 
+       * ["NUMERO"]=> string(11) "xxxxxxxxxxxxx" 
+       * ["OPERADORA_ATUAL"]=> string(5) "Claro" 
+       * ["CODE_OPR"]=> string(3) "021" 
+       * ["DATA_MIGRACAO"]=> string(0) "" 
+     * }
+     */
    }
  
 } // END class portabilidade
