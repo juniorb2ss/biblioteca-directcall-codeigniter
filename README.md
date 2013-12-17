@@ -5,10 +5,10 @@ Uma biblioteca utilizar alguns recursos da DirectCall API.
 ## Requisitos
 1. PHP 5 ou superior
 2. cURL
-3. Codeigniter 2.x
+3. CodeIgniter 2.x
 
 ## Instalação
-Acesse o diretório `application` do Codeigniter e clone o repositório utilizando o comando abaixo.
+Clone o repositório utilizando o comando abaixo e copie seu conteudo para pasta `application` do CodeIgniter.
 
     git clone https://github.com/juniorb2ss/biblioteca-directcall-codeigniter.git
     
