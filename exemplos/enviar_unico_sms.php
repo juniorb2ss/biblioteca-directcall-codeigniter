@@ -21,8 +21,11 @@ class enviar_unico_sms extends CI_Controller
        */
       
       $this->load->library('directcall');
+   }
 
-      /**
+   public function enviar()
+   {
+       /**
        * definindo número de origem, número de destino e texto
        */
 
