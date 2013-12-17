@@ -20,6 +20,10 @@ O arquivo de configuração se encontra em `application/config/directcall.php`.
 
     $this->load->library('directcall');
 
+## Exemplos
+Exemplos disponíveis na pasta `exemplos` deste repositório. [Clique aqui](https://github.com/juniorb2ss/biblioteca-directcall-codeigniter/tree/master/exemplos) para ver.
+
+
 ## Métodos
 ### Enviar SMS
 
