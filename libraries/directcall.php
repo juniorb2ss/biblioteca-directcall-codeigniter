@@ -52,28 +52,53 @@ class Directcall
     private $_ci;
 
     /**
-     * Número de origem
+     * Obrigatório Número de quem esta enviando o SMS, formato exemplo: 554199xx2010 (DDI DDD NUMERO)
+     *
+     * Doc: http://goo.gl/iEFt8b
      * @var [string]
      */
     
     public $numero_origem;
 
     /**
-     * Número de destino
+     * Destino obrigatório Número de destino do SMS, formato exemplo: 554199xx2010 (DDI DDD NUMERO)
+     * 
+     *    Notas sobre este parâmetro:   
+     *    - Para enviar para mais do que um destinatário basta incluir um ; no meio de cada número, por exemplo: 554199xx2010;554199xx2030, 
+     *      mas esta alternativa não deve ser utilizada para enviar SMS para mais do que 10 destinatários.
+     *    - Quando você precisar enviar para mais do que 10 destinatários prefira informar os números via arquivo csv +Inf.
+     *
+     * Doc: http://goo.gl/iEFt8b
      * @var [string]
      */
     
     public $numero_destino;
 
     /**
-     * tipo
+     * Opcional Opção para enviar como texto ou voz podendo ser ("voz" para torpedo de voz | "texto" para sms), por padrão é texto.
+     * Doc: http://goo.gl/iEFt8b
      * @var string
      */
     
     public $tipo = 'texto';
+    
+    /**
+     * Opcional Opção para envio do número de origem no início do SMS podendo ser s para enviar e n para não enviar.
+     * Doc: http://goo.gl/iEFt8b
+     * @var string
+     */
+    
+    public $id_origem = 's';
+    
 
     /**
-     * Texto a ser enviado
+     * Obrigatório Texto a ser enviado na mensagem pode ter até 700 caracteres, mas "importante":
+     *       - Notas sobre este parâmetro:
+     *         - Um SMS pode ter até 140 caracteres;
+     *         - Mensagens maiores serão divididas em "multiplos SMS", antes de serem entregues;
+     *         - A cobrança será proporcional ao número de SMS utilizado em cada envio.  
+     *         
+     * Doc: http://goo.gl/iEFt8b
      * @var [string]
      */
     
@@ -81,6 +106,7 @@ class Directcall
 
     /**
      * Última resposta da API
+     * Doc: http://goo.gl/iEFt8b
      * @var [array]
      */
     
