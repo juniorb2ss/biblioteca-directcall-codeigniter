@@ -8,7 +8,7 @@ Uma biblioteca utilizar alguns recursos da DirectCall API.
 3. Codeigniter 2.x
 
 ## Instalação
-Acesse o diretório `application` do Codeigniter** e clone o repositório utilizando o comando abaixo.
+Acesse o diretório `application` do Codeigniter e clone o repositório utilizando o comando abaixo.
 
     git clone https://github.com/juniorb2ss/biblioteca-directcall-codeigniter.git
     
