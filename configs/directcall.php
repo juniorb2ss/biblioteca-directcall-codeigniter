@@ -40,6 +40,11 @@
  */
     $config['url_sms_send'] = 'http://api.directcallsoft.com/sms/send';
 
+/**
+ * Url que será feito consulta sms.
+ */
+    $config['url_sms_status'] = 'http://api.directcallsoft.com/sms/status';
+
 
 /* End of file directcall.php */
 /* Location: ./application/config/directcall.php */

@@ -89,6 +89,24 @@ class Directcall
      */
     
     public $id_origem = 's';
+
+    /**
+     * Opcional Em caso de envio agendado esta variável deve ser enviada no formato <dia-mes-ano-hora-minuto-segundo> "d-m-Y-H-i-s"
+     * 
+     * Doc: http://goo.gl/Zwu9xO
+     * @var string d-m-Y-H-i-s
+     */
+    
+    public $cron;
+
+    /**
+     * Opcional Opção para envio com ou sem short number podendo ser s para envio com short number e n para envio sem short number.
+     *
+     * Doc: http://goo.gl/Zwu9xO
+     * @var string s or n
+     */
+    
+    public $short_number = 's';
     
 
     /**
@@ -199,7 +217,7 @@ class Directcall
         }
         else
         {
-            $this->config['access_token'] = $this->last_response->access_token;
+            $this->configs['access_token'] = $this->last_response->access_token;
         }
     }
 
@@ -260,9 +278,20 @@ class Directcall
                     'origem' => $this->numero_origem,
                     'destino' => $this->numero_destino,
                     'tipo' => $this->tipo,
-                    'access_token' => $this->config['access_token'],
+                    'access_token' => $this->configs['access_token'],
+                    'short_number' => $this->short_number,
+                    'id_origem' => $this->id_origem,
                     'texto' => $this->texto
                 );
+        /**
+         * Definido cron?
+         */
+        
+        if(!empty($this->cron))
+        {
+            $post['cron'] = $this->cron;
+        }
+
         /**
          * executando e capturando retorno
          */
@@ -282,6 +311,32 @@ class Directcall
          * executando e capturando retorno
          */
         
+    }
+
+    /**
+     * Com este método podemos verificar o status de envio ou agendamento de uma mensagem.
+     *
+     * Doc: http://goo.gl/kz4ukM
+     * @param  [string] $id_sms obrigatório "callerid" Obtido no retorno do envio do SMS
+     */
+    public function consultar_sms($id_sms)
+    {
+        /**
+         * url
+         * @var string
+         */
+        $url = $this->configs['url_sms_status'];
+
+        /**
+         * curl call get
+         */
+        $this->last_response = $this->_ci->curl->simple_post($url, array(
+                'code' => $id_sms, 
+                'access_token' => $this->configs['access_token']
+                )
+        );
+
+        return $this->last_response;
     }
 
     /**
