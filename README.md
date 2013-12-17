@@ -17,3 +17,6 @@ Funções:
 
     // @param callerid obrigatório
     consultar_sms($callerid) 
+
+    // @param numero_telefone obrigatório
+    consultar_portabilidade($numero_telefone)
