@@ -136,12 +136,6 @@ class Directcall
         $this->_ci->load->library('curl');
 
         /**
-         * chamando configurações
-         */
-        
-        $this->_ci->config->load('directcall');
-
-        /**
          * configirações ok ?
          */
         
