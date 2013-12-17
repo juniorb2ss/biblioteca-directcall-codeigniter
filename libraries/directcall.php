@@ -330,7 +330,7 @@ class Directcall
         /**
          * curl call get
          */
-        $this->last_response = $this->_ci->curl->simple_post($url, array(
+        $this->last_response = $this->_ci->curl->simple_get($url, array(
                 'code' => $id_sms, 
                 'access_token' => $this->configs['access_token']
                 )
