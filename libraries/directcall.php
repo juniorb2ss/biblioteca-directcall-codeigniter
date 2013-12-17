@@ -340,6 +340,49 @@ class Directcall
     }
 
     /**
+     * Método que faz a consulta de portabilidade pela API. 
+     *
+     * Doc: http://goo.gl/4E7FEH
+     * @param  [string] $numero obrigatório Numero que vai ser consultado
+     * @return [json ou xml]    OPERADORA_ORIGEM Operadora que o cliente foi portado.
+     *                          NUMERO Numero que esta sendo consultado.
+     *                          OPERADORA_ATUAL Operadora atual do número.
+     *                          CODE_OPR Código da operadora.
+     *                          DATA_MIGRACAO Data que o número foi migrado
+     */
+    public function portabilidade_consultar($numero)
+    {
+        $url = $this->configs['portabilidade_consultar'];
+
+        /**
+         * setando opções
+         */
+        
+        $options = array(
+                    CURLOPT_POST => TRUE,
+                    CURLOPT_HEADER => 0,
+                    CURLOPT_RETURNTRANSFER => 1
+                );
+
+        /**
+         * setando chamadas posts
+         */
+        
+        $post = array(
+                    'numero' => $numero,
+                    'formato' => $this->configs['format'],
+                    'access_token' => $this->configs['access_token']
+                );
+
+        /**
+         * executando e capturando retorno
+         */
+        
+        return $this->last_response = $this->_call_curl($url, $options, $post);
+
+    }
+
+    /**
      * debug function
      */
     public function debug()
