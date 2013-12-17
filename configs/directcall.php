@@ -34,6 +34,12 @@
  */
     $config['url_request_token'] = 'http://api.directcallsoft.com/request_token';
 
+    
+/**
+ * Url que será enviado novo sms.
+ */
+    $config['url_sms_send'] = 'http://api.directcallsoft.com/sms/send';
+
 
 /* End of file directcall.php */
 /* Location: ./application/config/directcall.php */
