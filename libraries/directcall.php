@@ -52,6 +52,41 @@ class Directcall
     private $_ci;
 
     /**
+     * Número de origem
+     * @var [string]
+     */
+    
+    public $numero_origem;
+
+    /**
+     * Número de destino
+     * @var [string]
+     */
+    
+    public $numero_destino;
+
+    /**
+     * tipo
+     * @var string
+     */
+    
+    public $tipo = 'texto';
+
+    /**
+     * Texto a ser enviado
+     * @var [string]
+     */
+    
+    public $texto;
+
+    /**
+     * Última resposta da API
+     * @var [array]
+     */
+    
+    private $last_response = array();
+
+    /**
      * Define client_id e $client_secret, retorno access_token válido por 1 hora.
      * 
      * Doc: http://goo.gl/1d7ozo
@@ -99,43 +134,144 @@ class Directcall
         $this->configs = $config;
 
         $this->_request_token();
-
-        echo $this->config['access_token'];
     }
 
+    /**
+     * Requesita uma nova token para o servidor, as tokens são válidas por 1 hora.
+     * Doc: http://goo.gl/1d7ozo
+     * @return [string] access_token
+     */
+    
     public function _request_token()
     {
         /**
+         * url
+         */
+            $url = $this->configs['url_request_token'];
+        /**
+         * setando opções
+         */
+        
+        $options = array(
+                    CURLOPT_POST => TRUE,
+                    CURLOPT_HEADER => 0,
+                    CURLOPT_RETURNTRANSFER => 1
+                );
+
+        /**
+         * setando chamadas posts
+         */
+        
+        $post = array(
+                    'client_id' => $this->configs['client_id'],
+                    'client_secret' => $this->configs['client_secret']
+                );
+        /**
+         * executando e capturando retorno
+         */
+        
+        $this->last_response = $this->_call_curl($url, $options, $post);
+        
+        
+        if(empty($this->last_response->access_token))
+        {
+            show_error('Resposta inválida API DirectCall');
+        }
+        else
+        {
+            $this->config['access_token'] = $this->last_response->access_token;
+        }
+    }
+
+    public function _call_curl($url, $array_options, $array_post)
+    {
+       /**
          * inicializando curl
          */
-        $this->_ci->curl->create($this->configs['url_request_token']);
+        
+        $this->_ci->curl->create($url);
 
         /**
          * setando opções
          */
-        $this->_ci->curl->options(
-            array(
-                CURLOPT_POST => TRUE,
-                CURLOPT_HEADER => 0,
-                CURLOPT_RETURNTRANSFER => 1
-                )
-            );
+        
+        $this->_ci->curl->options( $array_options );
+
         /**
          * setando chamadas posts
          */
-        $this->_ci->curl->post(
-            array(
-                'client_id' => $this->configs['client_id'],
-                'client_secret' => $this->configs['client_secret']
-                )
-            );
+        
+        $this->_ci->curl->post( $array_post );
+
         /**
          * executando e capturando retorno
          */
-        if(!$this->config['access_token'] = $this->_ci->curl->execute())
+        
+        return json_decode($this->_ci->curl->execute());
+        
+    }
+
+    
+    /**
+     * Enviar sms pela API módulo de sms
+     * @return [array] status do envio
+     */    
+    public function enviar_sms($debug = FALSE)
+    {
+        /**
+         * url
+         */
+            $url = $this->configs['url_sms_send'];
+        /**
+         * setando opções
+         */
+        
+        $options = array(
+                    CURLOPT_POST => TRUE,
+                    CURLOPT_HEADER => 0,
+                    CURLOPT_RETURNTRANSFER => 1
+                );
+
+        /**
+         * setando chamadas posts
+         */
+        
+        $post = array(
+                    'origem' => $this->numero_origem,
+                    'destino' => $this->numero_destino,
+                    'tipo' => $this->tipo,
+                    'access_token' => $this->config['access_token'],
+                    'texto' => $this->texto
+                );
+        /**
+         * executando e capturando retorno
+         */
+        
+        $this->last_response = $this->_call_curl($url, $options, $post);
+
+        /**
+         * debug
+         */
+
+        if($debug === TRUE)
         {
-            show_error('Resposta inválida API DirectCall');
+            $this->debug();
         }
+
+        /**
+         * executando e capturando retorno
+         */
+        
+    }
+
+    /**
+     * debug function
+     */
+    public function debug()
+    {
+        echo '<pre>';
+        var_dump($this->last_response);
+        echo '</pre>';
     }
 
 } // END class Directcall
