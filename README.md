@@ -12,8 +12,8 @@ Inicializar:
 
 Funções:
     
-     // @param debug FALSE
+     // @param debug opcional
     $this->directcall->enviar_sms($debug)
 
-     // @param callerid FALSE
+     // @param callerid obrigatório
     $this->directcall->consultar_sms($callerid) 
