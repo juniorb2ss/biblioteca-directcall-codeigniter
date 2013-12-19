@@ -182,42 +182,52 @@ class Directcall
     
     public function _request_token()
     {
-        /**
-         * url
-         */
-            $url = $this->configs['url_request_token'];
-        /**
-         * setando opções
-         */
-        
-        $options = array(
-                    CURLOPT_POST => TRUE,
-                    CURLOPT_HEADER => 0,
-                    CURLOPT_RETURNTRANSFER => 1
-                );
 
-        /**
-         * setando chamadas posts
-         */
-        
-        $post = array(
-                    'client_id' => $this->configs['client_id'],
-                    'client_secret' => $this->configs['client_secret']
-                );
-        /**
-         * executando e capturando retorno
-         */
-        
-        $this->last_response = $this->_call_curl($url, $options, $post);
-        
-        
-        if(empty($this->last_response->access_token))
+        if(!$this->_ci->input->cookie('access_token'))
         {
-            show_error('Resposta inválida API DirectCall');
+            /**
+             * url
+             */
+                $url = $this->configs['url_request_token'];
+            /**
+             * setando opções
+             */
+            
+            $options = array(
+                        CURLOPT_POST => TRUE,
+                        CURLOPT_HEADER => 0,
+                        CURLOPT_RETURNTRANSFER => 1
+                    );
+
+            /**
+             * setando chamadas posts
+             */
+            
+            $post = array(
+                        'client_id' => $this->configs['client_id'],
+                        'client_secret' => $this->configs['client_secret']
+                    );
+            /**
+             * executando e capturando retorno
+             */
+            
+            $this->last_response = $this->_call_curl($url, $options, $post);
+            
+            
+            if(empty($this->last_response->access_token))
+            {
+                show_error('Resposta inválida API DirectCall');
+            }
+            else
+            {
+                $this->configs['access_token'] = $this->last_response->access_token;
+            }
+
+            $this->_ci->input->set_cookie('access_token', $this->last_response->access_token, '3600');
         }
         else
         {
-            $this->configs['access_token'] = $this->last_response->access_token;
+            $this->configs['access_token'] = $this->_ci->input->cookie('access_token');
         }
     }
 
